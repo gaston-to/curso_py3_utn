@@ -28,6 +28,7 @@
     - [Lección 3. Decoradores de clase](#lección-3-decoradores-de-clase)
     - [Lección 4. Apilamiento de decoradores](#lección-4-apilamiento-de-decoradores)
     - [Lección 5. Decoradores con argumentos](#lección-5-decoradores-con-argumentos)
+  - [Unidad 4.](#unidad-4)
 
 ## Unidad 1: Programación orientada a objetos
 
@@ -1020,3 +1021,42 @@ def registro_usuario(nombre, apellido):
 
 registro_usuario("Carlo", "Kuntz")
 ```
+<!--
+## Unidad 4: Metaclases
+
+Con las metaclases se busca extender las funcionalidades de una clase, permitiendo modificar la forma en que se crean las instancias de una clase. Las metaclases son clases que definen cómo se crean las clases, y permiten personalizar el comportamiento de las clases y sus instancias. Las metaclases se utilizan para añadir funcionalidades adicionales a las clases, como la validación de atributos, la gestión de recursos, la autenticación de usuarios, etc. Aquí tienes un ejemplo de pseudocódigo y código para ilustrar cómo se puede lograr esto:
+
+Pseudocódigo:
+
+```ps
+Clase Metaclase(type):
+    Definir __new__(cls, nombre, bases, diccionario):
+        # Código para personalizar la creación de la clase
+        return super().__new__(cls, nombre, bases, diccionario)
+
+Clase Clase(metaclass=Metaclase):
+    # Código de la clase
+
+Instancia = Clase()
+```
+
+Código en Python:
+
+```python
+class Metaclase(type):
+    def __new__(cls, nombre, bases, diccionario):
+        print('Creando la clase:', nombre)
+        return super().__new__(cls, nombre, bases, diccionario)
+
+class Clase(metaclass=Metaclase):
+    def __init__(self):
+        print('Creando una instancia de la clase')
+        
+instancia = Clase()
+```
+
+En este ejemplo, la clase `Metaclase` define el método `__new__` para personalizar cómo se crea la clase, y la clase `Clase` utiliza la metaclase `Metaclase` para personalizar su comportamiento. Al crear una instancia de la clase `Clase`, se llama al método `__new__` de la metaclase `Metaclase` para personalizar la creación de la clase y la instancia, lo que permite extender las funcionalidades de la clase y personalizar su comportamiento.
+-->
+
+## Unidad 4.
+
