@@ -28,7 +28,9 @@
     - [Lección 3. Decoradores de clase](#lección-3-decoradores-de-clase)
     - [Lección 4. Apilamiento de decoradores](#lección-4-apilamiento-de-decoradores)
     - [Lección 5. Decoradores con argumentos](#lección-5-decoradores-con-argumentos)
-  - [Unidad 4.](#unidad-4)
+  - [Unidad 4. Patrones de Desarrollo](#unidad-4-patrones-de-desarrollo)
+    - [Lección 1. Patrón Observador](#lección-1-patrón-observador)
+      - [Implementación del patrón Observador en Python](#implementación-del-patrón-observador-en-python)
 
 ## Unidad 1: Programación orientada a objetos
 
@@ -1058,5 +1060,155 @@ instancia = Clase()
 En este ejemplo, la clase `Metaclase` define el método `__new__` para personalizar cómo se crea la clase, y la clase `Clase` utiliza la metaclase `Metaclase` para personalizar su comportamiento. Al crear una instancia de la clase `Clase`, se llama al método `__new__` de la metaclase `Metaclase` para personalizar la creación de la clase y la instancia, lo que permite extender las funcionalidades de la clase y personalizar su comportamiento.
 -->
 
-## Unidad 4.
+## Unidad 4. Patrones de Desarrollo
+
+Nos vamos a centrar en el patron Observador porque es el que solicita el Docente Barreto. Quedarán pendientes los otros patrones de diseño: singleton, factory, builder, otros. Se debe señalar que la bibliografia enuncia que cada patron se diseña para resolver un problema especifico, por lo que se debe tener en cuenta el problema a resolver para aplicar el patron de diseño adecuado.
+
+### Lección 1. Patrón Observador
+
+El patrón Observador es un patrón de diseño de comportamiento que define una relación de uno a muchos entre un sujeto y varios observadores. El sujeto es el objeto que tiene un estado que puede cambiar, y los observadores son los objetos que desean ser notificados cuando cambia el estado del sujeto. Cuando el estado del sujeto cambia, notifica a todos los observadores registrados, permitiéndoles actualizar su estado o realizar acciones adicionales en respuesta al cambio. El patrón Observador se utiliza para implementar la comunicación entre objetos de forma desacoplada y flexible, permitiendo que los objetos se comuniquen sin conocerse directamente.
+
+#### Implementación del patrón Observador en Python
+
+En Python, el patrón Observador se puede implementar utilizando clases y métodos para definir el sujeto y los observadores, y establecer una relación de uno a muchos entre ellos. Aquí tienes un ejemplo de pseudocódigo y código para ilustrar cómo se puede implementar el patrón Observador en Python:
+
+Pseudocódigo:
+
+```ps
+Clase Sujeto:
+    Definir __init__(self):
+        self.observadores = []
+
+    Definir registrar_observador(self, observador):
+        self.observadores.append(observador)
+
+    Definir eliminar_observador(self, observador):
+        self.observadores.remove(observador)
+
+    Definir notificar_observadores(self):
+        Para observador en self.observadores:
+            observador.actualizar()
+
+Clase Observador:
+    Definir actualizar(self):
+        # Código para actualizar el estado del observador
+
+sujeto = Sujeto()
+observador1 = Observador()
+observador2 = Observador()
+
+sujeto.registrar_observador(observador1)
+sujeto.registrar_observador(observador2)
+
+sujeto.notificar_observadores()
+```
+
+Código en Python:
+
+```python
+"""
+Se desarrolla de manera genérica el patrón observador conforme a Barreto.
+El mismo corresponde al esquema UML que se encuentra en Wikipedia.
+"""
+
+# Se importa la librería abc para trabajar con clases abstractas.
+from abc import ABC, abstractmethod
+
+# se define la clase abstracta Sujeto, tambien llamado Notificador.
+# Esta clase es la que se encarga de notificar a los observadores.
+
+class Sujeto(ABC):
+    def __init__(self):
+        self.observadores = []
+
+    def agregar_observador(self, observador):
+        self.observadores.append(observador)
+
+    def eliminar_observador(self, observador):
+        self.observadores.remove(observador)
+
+    def notificar_observadores(self):
+        for observador in self.observadores:
+            observador.actualizar(self)
+
+    @abstractmethod
+    def obtener_estado(self):
+        pass
+
+    @abstractmethod
+    def establecer_estado(self, estado):
+        pass
+
+# Se define la clase abstracta Observador.
+# Esta clase es la que se encarga de recibir las notificaciones del sujeto.
+# En este caso, el método actualizar recibe el sujeto que lo notifica.
+# Se puede agregar un argumento adicional para enviar información adicional.
+# En este caso, se envía el sujeto que lo notifica.
+# 
+
+class Observador(ABC):
+    @abstractmethod
+    def actualizar(self, sujeto):
+        pass
+
+# Se define la clase ConcretaSujeto que hereda de Sujeto.
+# Esta clase es la que se encarga de notificar a los observadores.
+# En este caso, se define un estado que es un entero.
+# Se define un método para obtener el estado y otro para establecer el estado.
+# Se define un método para cambiar el estado y notificar a los observadores.
+#   
+
+class ConcretoSujeto(Sujeto):
+    def __init__(self):
+        super().__init__()
+        self.estado = 0
+
+    def obtener_estado(self):
+        return self.estado
+
+    def establecer_estado(self, estado):
+        self.estado = estado
+
+    def cambiar_estado(self, estado):
+        self.estado = estado
+        self.notificar_observadores()
+
+# Se define la clase ConcretoObservador que hereda de Observador.
+# Esta clase es la que se encarga de recibir las notificaciones del sujeto.
+# En este caso, se define un estado que es un entero.
+# Se define un método para actualizar el estado.
+# 
+
+class ConcretoObservador(Observador):
+    def __init__(self):
+        self.estado = 0
+
+    def actualizar(self, sujeto):
+        self.estado = sujeto.obtener_estado()
+            
+    def obtener_estado(self):
+        return self.estado
+        
+# Se define la función principal main.
+# En esta función se crean un sujeto y un observador.
+# Se agrega el observador al sujeto.
+# Se cambia el estado del sujeto y se notifica a los observadores.
+# Se imprime el estado del observador.
+#
+
+def main():
+    sujeto = ConcretoSujeto()
+    observador = ConcretoObservador()
+    sujeto.agregar_observador(observador)
+    sujeto.cambiar_estado(5)
+    print(observador.obtener_estado())
+
+# Se llama a la función principal main.
+#
+
+if __name__ == "__main__":
+    main()
+```
+
+En este ejemplo, se define una clase abstracta `Sujeto` que representa el sujeto que notifica a los observadores, y una clase abstracta `Observador` que representa los observadores que reciben las notificaciones del sujeto. Se definen las clases concretas `ConcretoSujeto` y `ConcretoObservador` que implementan los métodos abstractos de las clases abstractas y personalizan su comportamiento. Se crea una instancia del sujeto `ConcretoSujeto` y un observador `ConcretoObservador`, se agrega el observador al sujeto, se cambia el estado del sujeto y se notifica a los observadores. Al imprimir el estado del observador, se muestra el estado actualizado en respuesta al cambio del sujeto.
 
