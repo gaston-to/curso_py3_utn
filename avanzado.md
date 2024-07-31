@@ -31,6 +31,7 @@
   - [Unidad 4. Patrones de Desarrollo](#unidad-4-patrones-de-desarrollo)
     - [Lección 1. Patrón Observador](#lección-1-patrón-observador)
       - [Implementación del patrón Observador en Python](#implementación-del-patrón-observador-en-python)
+  - [Unidad 5: Socket](#unidad-5-socket)
 
 ## Unidad 1: Programación orientada a objetos
 
@@ -1212,3 +1213,8 @@ if __name__ == "__main__":
 
 En este ejemplo, se define una clase abstracta `Sujeto` que representa el sujeto que notifica a los observadores, y una clase abstracta `Observador` que representa los observadores que reciben las notificaciones del sujeto. Se definen las clases concretas `ConcretoSujeto` y `ConcretoObservador` que implementan los métodos abstractos de las clases abstractas y personalizan su comportamiento. Se crea una instancia del sujeto `ConcretoSujeto` y un observador `ConcretoObservador`, se agrega el observador al sujeto, se cambia el estado del sujeto y se notifica a los observadores. Al imprimir el estado del observador, se muestra el estado actualizado en respuesta al cambio del sujeto.
 
+## Unidad 5: Socket
+
+Los sockets en Python son una forma de comunicación entre procesos que permite enviar y recibir datos a través de una red o entre procesos en la misma máquina. Los sockets se utilizan para establecer una conexión entre un cliente y un servidor, y permiten la transferencia de datos en tiempo real. Los sockets en Python se implementan utilizando la biblioteca `socket`, que proporciona una interfaz para crear y gestionar conexiones de red.
+
+<!--Estudiar pruebas unitarias!!! -->
