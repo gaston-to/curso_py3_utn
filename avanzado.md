@@ -34,7 +34,9 @@
   - [Unidad 5: Socket](#unidad-5-socket)
     - [Lección 1. Servidor de sockets](#lección-1-servidor-de-sockets)
     - [Lección 2. Cliente de sockets](#lección-2-cliente-de-sockets)
-    - [Ejemplo 1. Echo Server](#ejemplo-1-echo-server)
+      - [Ejemplo 1. Echo Server](#ejemplo-1-echo-server)
+    - [Lección 3. Multithreading](#lección-3-multithreading)
+    - [Lección 4. Múltiples conexiones (`queue`)](#lección-4-múltiples-conexiones-queue)
 
 ## Unidad 1: Programación orientada a objetos
 
@@ -1326,7 +1328,7 @@ print(f'Respuesta del servidor: {respuesta.decode()}')
 # Cerrar la conexión
 cliente.close()
 ```
-### Ejemplo 1. Echo Server
+#### Ejemplo 1. Echo Server
 
 Ejemplo completo de un servidor de sockets que recibe un mensaje del cliente y lo envía de vuelta al cliente. El servidor de sockets escucha conexiones entrantes de los clientes y acepta las conexiones en un bucle infinito. Cuando se recibe un mensaje del cliente, se envía de vuelta al cliente. El servidor de sockets se ejecuta en un bucle infinito hasta que se cierra manualmente.
 
@@ -1370,7 +1372,29 @@ respuesta = cliente.recv(1024)
 print(f'Respuesta del servidor: {respuesta.decode()}')
 cliente.close()
 ```
+### Lección 3. Multithreading
+
+El multithreading en Python se utiliza para ejecutar múltiples hilos de ejecución simultáneamente y realizar tareas en paralelo. El multithreading se implementa utilizando la biblioteca `threading`, que proporciona una interfaz para crear y gestionar hilos de ejecución en Python. El multithreading se utiliza para mejorar el rendimiento y la eficiencia de las aplicaciones al realizar tareas en paralelo y aprovechar los múltiples núcleos de la CPU. Aquí tienes un ejemplo de pseudocódigo y código para ilustrar cómo se puede implementar el multithreading en Python:
+
+Pseudocódigo:
+
+```ps
+Importar la biblioteca threading
+
+Definir una función que se ejecutará en un hilo
+
+Crear un hilo y ejecutar la función en paralelo
 
 
+```
 
-<!--Estudiar pruebas unitarias!!! -->
+### Lección 4. Múltiples conexiones (`queue`)
+
+En Python, es posible manejar múltiples conexiones de clientes utilizando una cola (`queue`) para gestionar las conexiones entrantes y salientes de los clientes. La cola (`queue`) se utiliza para almacenar las conexiones de los clientes y procesarlas en un orden específico, permitiendo gestionar múltiples conexiones de forma eficiente y escalable. Aquí tienes un ejemplo de pseudocódigo y código para ilustrar cómo se puede manejar múltiples conexiones de clientes utilizando una cola (`queue`) en Python:
+
+Pseudocódigo:
+
+```ps
+Importar la biblioteca socket
+Importar la biblioteca threading
+Importar la biblioteca queue
