@@ -32,6 +32,9 @@
     - [Lección 1. Patrón Observador](#lección-1-patrón-observador)
       - [Implementación del patrón Observador en Python](#implementación-del-patrón-observador-en-python)
   - [Unidad 5: Socket](#unidad-5-socket)
+    - [Lección 1. Servidor de sockets](#lección-1-servidor-de-sockets)
+    - [Lección 2. Cliente de sockets](#lección-2-cliente-de-sockets)
+    - [Ejemplo 1. Echo Server](#ejemplo-1-echo-server)
 
 ## Unidad 1: Programación orientada a objetos
 
@@ -1216,5 +1219,158 @@ En este ejemplo, se define una clase abstracta `Sujeto` que representa el sujeto
 ## Unidad 5: Socket
 
 Los sockets en Python son una forma de comunicación entre procesos que permite enviar y recibir datos a través de una red o entre procesos en la misma máquina. Los sockets se utilizan para establecer una conexión entre un cliente y un servidor, y permiten la transferencia de datos en tiempo real. Los sockets en Python se implementan utilizando la biblioteca `socket`, que proporciona una interfaz para crear y gestionar conexiones de red.
+
+### Lección 1. Servidor de sockets
+
+El servidor de sockets en Python se implementa utilizando la biblioteca `socket` para crear un socket de servidor y escuchar conexiones entrantes de los clientes. El servidor de sockets se ejecuta en un bucle infinito para aceptar conexiones de los clientes y manejar las solicitudes de los clientes. Aquí tienes un ejemplo de pseudocódigo y código para ilustrar cómo se puede implementar un servidor de sockets en Python:
+
+Pseudocódigo:
+
+```ps
+Importar la biblioteca socket
+
+Crear un socket de servidor
+
+Enlazar el socket a una dirección y puerto
+
+Escuchar conexiones entrantes
+
+En un bucle infinito:
+    Aceptar una conexión entrante
+    Recibir datos del cliente
+    Procesar los datos recibidos
+    Enviar una respuesta al cliente
+    Cerrar la conexión
+
+Cerrar el socket de servidor
+
+```
+
+Código en Python:
+
+```python
+import socket
+
+# Crear un socket de servidor
+servidor = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+# Enlazar el socket a una dirección y puerto
+servidor.bind(('localhost', 12345))
+
+# Escuchar conexiones entrantes
+servidor.listen()
+
+# En un bucle infinito:
+while True:
+    # Aceptar una conexión entrante
+    cliente, direccion = servidor.accept()
+    print(f'Conexión entrante de {direccion}')
+
+    # Recibir datos del cliente
+    datos = cliente.recv(1024)
+    print(f'Datos recibidos: {datos.decode()}')
+
+    # Procesar los datos recibidos
+    respuesta = 'Mensaje recibido'
+    cliente.send(respuesta.encode())
+
+    # Cerrar la conexión
+    cliente.close()
+
+# Cerrar el socket de servidor
+servidor.close()
+```
+
+En este ejemplo, se crea un socket de servidor utilizando la biblioteca `socket` y se enlaza a la dirección `localhost` y el puerto `12345`. El servidor de sockets escucha conexiones entrantes de los clientes y acepta las conexiones en un bucle infinito. Cuando se recibe un mensaje del cliente, se procesa y se envía una respuesta al cliente. Finalmente, se cierra la conexión con el cliente y se continúa escuchando conexiones entrantes. El servidor de sockets se ejecuta en un bucle infinito hasta que se cierra manualmente.
+
+### Lección 2. Cliente de sockets
+
+El cliente de sockets en Python se implementa utilizando la biblioteca `socket` para crear un socket de cliente y conectarse a un servidor remoto. El cliente de sockets se conecta al servidor remoto y envía datos al servidor para solicitar información o realizar una acción. Aquí tienes un ejemplo de pseudocódigo y código para ilustrar cómo se puede implementar un cliente de sockets en Python:
+
+Pseudocódigo:
+
+```ps
+Importar la biblioteca socket
+
+Crear un socket de cliente
+
+Conectar el socket a una dirección y puerto
+
+Enviar datos al servidor
+
+Recibir una respuesta del servidor
+
+Cerrar la conexión
+
+```
+
+Código en Python:
+
+```python
+import socket
+
+# Crear un socket de cliente
+cliente = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+# Conectar el socket a una dirección y puerto
+cliente.connect(('localhost', 12345))
+
+# Enviar datos al servidor en utf-8
+mensaje = 'Hola, servidor'
+cliente.send(mensaje.encode())
+
+# Recibir una respuesta del servidor
+respuesta = cliente.recv(1024)
+print(f'Respuesta del servidor: {respuesta.decode()}')
+
+# Cerrar la conexión
+cliente.close()
+```
+### Ejemplo 1. Echo Server
+
+Ejemplo completo de un servidor de sockets que recibe un mensaje del cliente y lo envía de vuelta al cliente. El servidor de sockets escucha conexiones entrantes de los clientes y acepta las conexiones en un bucle infinito. Cuando se recibe un mensaje del cliente, se envía de vuelta al cliente. El servidor de sockets se ejecuta en un bucle infinito hasta que se cierra manualmente.
+
+Código en Python:
+1. Servidor:
+
+```python
+import socket
+
+servidor = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+servidor.bind(('localhost', 12345))
+
+servidor.listen()
+
+while True:
+    cliente, direccion = servidor.accept()
+    print(f'Conexión entrante de {direccion}')
+
+    datos = cliente.recv(1024)
+    print(f'Datos recibidos: {datos.decode()}')
+
+    respuesta = datos
+    cliente.send(respuesta)
+
+    cliente.close()
+
+servidor.close()
+```
+
+2. Cliente:
+
+```python
+import socket
+
+cliente = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+cliente.connect(('localhost', 12345))
+mensaje = 'Hola, servidor'
+cliente.send(mensaje.encode())
+respuesta = cliente.recv(1024)
+print(f'Respuesta del servidor: {respuesta.decode()}')
+cliente.close()
+```
+
+
 
 <!--Estudiar pruebas unitarias!!! -->
