@@ -36,7 +36,6 @@
     - [Lección 2. Cliente de sockets](#lección-2-cliente-de-sockets)
       - [Ejemplo 1. Echo Server](#ejemplo-1-echo-server)
     - [Lección 3. Multithreading](#lección-3-multithreading)
-    - [Lección 4. Múltiples conexiones (`queue`)](#lección-4-múltiples-conexiones-queue)
 
 ## Unidad 1: Programación orientada a objetos
 
@@ -1376,7 +1375,7 @@ cliente.close()
 
 El multithreading en Python se utiliza para ejecutar múltiples hilos de ejecución simultáneamente y realizar tareas en paralelo. El multithreading se implementa utilizando la biblioteca `threading`, que proporciona una interfaz para crear y gestionar hilos de ejecución en Python. El multithreading se utiliza para mejorar el rendimiento y la eficiencia de las aplicaciones al realizar tareas en paralelo y aprovechar los múltiples núcleos de la CPU. Aquí tienes un ejemplo de pseudocódigo y código para ilustrar cómo se puede implementar el multithreading en Python:
 
-Pseudocódigo:
+- Pseudocódigo:
 
 ```ps
 Importar la biblioteca threading
@@ -1385,16 +1384,24 @@ Definir una función que se ejecutará en un hilo
 
 Crear un hilo y ejecutar la función en paralelo
 
-
 ```
 
-### Lección 4. Múltiples conexiones (`queue`)
+- Código en Python:
 
-En Python, es posible manejar múltiples conexiones de clientes utilizando una cola (`queue`) para gestionar las conexiones entrantes y salientes de los clientes. La cola (`queue`) se utiliza para almacenar las conexiones de los clientes y procesarlas en un orden específico, permitiendo gestionar múltiples conexiones de forma eficiente y escalable. Aquí tienes un ejemplo de pseudocódigo y código para ilustrar cómo se puede manejar múltiples conexiones de clientes utilizando una cola (`queue`) en Python:
+```python
+import threading
 
-Pseudocódigo:
+def funcion():
+    for i in range(5):
+        print(f'Hilo: {i}')
 
-```ps
-Importar la biblioteca socket
-Importar la biblioteca threading
-Importar la biblioteca queue
+hilo = threading.Thread(target=funcion)
+hilo.start()
+# salida: Hilo: 0
+# salida: Hilo: 1
+# salida: Hilo: 2
+# salida: Hilo: 3
+# salida: Hilo: 4
+```
+
+En este ejemplo, se define una función `funcion` que se ejecutará en un hilo de ejecución utilizando la biblioteca `threading`. Se crea un hilo `hilo` y se ejecuta la función `funcion` en paralelo en un hilo separado. El hilo imprime un mensaje en la consola cinco veces, lo que permite realizar tareas en paralelo y aprovechar los múltiples núcleos de la CPU.
