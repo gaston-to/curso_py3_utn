@@ -32,10 +32,11 @@
     - [Lección 1. Patrón Observador](#lección-1-patrón-observador)
       - [Implementación del patrón Observador en Python](#implementación-del-patrón-observador-en-python)
   - [Unidad 5: Socket](#unidad-5-socket)
-    - [Lección 1. Servidor de sockets](#lección-1-servidor-de-sockets)
-    - [Lección 2. Cliente de sockets](#lección-2-cliente-de-sockets)
+    - [Lección 1. Multithreading](#lección-1-multithreading)
+      - [Multithreading con `queque`](#multithreading-con-queque)
+    - [Lección 2. Servidor de sockets](#lección-2-servidor-de-sockets)
+    - [Lección 3. Cliente de sockets](#lección-3-cliente-de-sockets)
       - [Ejemplo 1. Echo Server](#ejemplo-1-echo-server)
-    - [Lección 3. Multithreading](#lección-3-multithreading)
 
 ## Unidad 1: Programación orientada a objetos
 
@@ -1221,7 +1222,83 @@ En este ejemplo, se define una clase abstracta `Sujeto` que representa el sujeto
 
 Los sockets en Python son una forma de comunicación entre procesos que permite enviar y recibir datos a través de una red o entre procesos en la misma máquina. Los sockets se utilizan para establecer una conexión entre un cliente y un servidor, y permiten la transferencia de datos en tiempo real. Los sockets en Python se implementan utilizando la biblioteca `socket`, que proporciona una interfaz para crear y gestionar conexiones de red.
 
-### Lección 1. Servidor de sockets
+### Lección 1. Multithreading
+
+El multithreading en Python se utiliza para ejecutar múltiples hilos de ejecución simultáneamente y realizar tareas en paralelo. El multithreading se implementa utilizando la biblioteca `threading`, que proporciona una interfaz para crear y gestionar hilos de ejecución en Python. El multithreading se utiliza para mejorar el rendimiento y la eficiencia de las aplicaciones al realizar tareas en paralelo y aprovechar los múltiples núcleos de la CPU. Aquí tienes un ejemplo de pseudocódigo y código para ilustrar cómo se puede implementar el multithreading en Python:
+
+- Pseudocódigo:
+
+```ps
+Importar la biblioteca threading
+
+Definir una función que se ejecutará en un hilo
+
+Crear un hilo y ejecutar la función en paralelo
+
+```
+
+- Código en Python:
+
+```python
+import threading
+
+def funcion():
+    for i in range(5):
+        print(f'Hilo: {i}')
+
+hilo = threading.Thread(target=funcion)
+hilo.start()
+# salida: Hilo: 0
+# salida: Hilo: 1
+# salida: Hilo: 2
+# salida: Hilo: 3
+# salida: Hilo: 4
+```
+
+En este ejemplo, se define una función `funcion` que se ejecutará en un hilo de ejecución utilizando la biblioteca `threading`. Se crea un hilo `hilo` y se ejecuta la función `funcion` en paralelo en un hilo separado. El hilo imprime un mensaje en la consola cinco veces, lo que permite realizar tareas en paralelo y aprovechar los múltiples núcleos de la CPU.
+
+#### Multithreading con `queque`
+
+El módulo `queue` en Python se utiliza para implementar colas de datos y compartir datos entre hilos de ejecución de forma segura. El módulo `queue` proporciona una interfaz para crear colas de datos y realizar operaciones de encolar y desencolar de forma segura en entornos multithreading. Aquí tienes un ejemplo de pseudocódigo y código para ilustrar cómo se puede implementar el multithreading con `queue` en Python:
+
+- Pseudocódigo:
+
+```ps
+Importar la biblioteca threading
+Importar la biblioteca queue
+
+Definir una función que se ejecutará en un hilo
+Crear una cola de datos
+Crear un hilo y ejecutar la función en paralelo
+```
+
+- Código en Python:
+
+```python
+import threading
+import queue
+
+def funcion(cola):
+    for i in range(5):
+        cola.put(f'Hilo: {i}')
+
+cola = queue.Queue()
+hilo = threading.Thread(target=funcion, args=(cola,))
+hilo.start()
+
+while not cola.empty():
+    print(cola.get())
+# salida: Hilo: 0
+# salida: Hilo: 1
+# salida: Hilo: 2
+# salida: Hilo: 3
+# salida: Hilo: 4
+```
+
+En este ejemplo, se define una función `funcion` que se ejecutará en un hilo de ejecución utilizando la biblioteca `threading`. Se crea una cola de datos `cola` utilizando la biblioteca `queue` y se pasa como argumento a la función `funcion`. Se crea un hilo `hilo` y se ejecuta la función `funcion` en paralelo en un hilo separado. El hilo encola mensajes en la cola `cola`, y el hilo principal desencola los mensajes de la cola y los imprime en la consola, lo que permite compartir datos de forma segura entre hilos de ejecución.
+
+
+### Lección 2. Servidor de sockets
 
 El servidor de sockets en Python se implementa utilizando la biblioteca `socket` para crear un socket de servidor y escuchar conexiones entrantes de los clientes. El servidor de sockets se ejecuta en un bucle infinito para aceptar conexiones de los clientes y manejar las solicitudes de los clientes. Aquí tienes un ejemplo de pseudocódigo y código para ilustrar cómo se puede implementar un servidor de sockets en Python:
 
@@ -1284,7 +1361,7 @@ servidor.close()
 
 En este ejemplo, se crea un socket de servidor utilizando la biblioteca `socket` y se enlaza a la dirección `localhost` y el puerto `12345`. El servidor de sockets escucha conexiones entrantes de los clientes y acepta las conexiones en un bucle infinito. Cuando se recibe un mensaje del cliente, se procesa y se envía una respuesta al cliente. Finalmente, se cierra la conexión con el cliente y se continúa escuchando conexiones entrantes. El servidor de sockets se ejecuta en un bucle infinito hasta que se cierra manualmente.
 
-### Lección 2. Cliente de sockets
+### Lección 3. Cliente de sockets
 
 El cliente de sockets en Python se implementa utilizando la biblioteca `socket` para crear un socket de cliente y conectarse a un servidor remoto. El cliente de sockets se conecta al servidor remoto y envía datos al servidor para solicitar información o realizar una acción. Aquí tienes un ejemplo de pseudocódigo y código para ilustrar cómo se puede implementar un cliente de sockets en Python:
 
@@ -1371,37 +1448,6 @@ respuesta = cliente.recv(1024)
 print(f'Respuesta del servidor: {respuesta.decode()}')
 cliente.close()
 ```
-### Lección 3. Multithreading
 
-El multithreading en Python se utiliza para ejecutar múltiples hilos de ejecución simultáneamente y realizar tareas en paralelo. El multithreading se implementa utilizando la biblioteca `threading`, que proporciona una interfaz para crear y gestionar hilos de ejecución en Python. El multithreading se utiliza para mejorar el rendimiento y la eficiencia de las aplicaciones al realizar tareas en paralelo y aprovechar los múltiples núcleos de la CPU. Aquí tienes un ejemplo de pseudocódigo y código para ilustrar cómo se puede implementar el multithreading en Python:
+En este ejemplo, el servidor de sockets recibe un mensaje del cliente y lo envía de vuelta al cliente. El cliente de sockets envía un mensaje al servidor y recibe la respuesta del servidor. El servidor de sockets escucha conexiones entrantes de los clientes y acepta las conexiones en un bucle infinito. Cuando se recibe un mensaje del cliente, se envía de vuelta al cliente. El servidor de sockets se ejecuta en un bucle infinito hasta que se cierra manualmente.
 
-- Pseudocódigo:
-
-```ps
-Importar la biblioteca threading
-
-Definir una función que se ejecutará en un hilo
-
-Crear un hilo y ejecutar la función en paralelo
-
-```
-
-- Código en Python:
-
-```python
-import threading
-
-def funcion():
-    for i in range(5):
-        print(f'Hilo: {i}')
-
-hilo = threading.Thread(target=funcion)
-hilo.start()
-# salida: Hilo: 0
-# salida: Hilo: 1
-# salida: Hilo: 2
-# salida: Hilo: 3
-# salida: Hilo: 4
-```
-
-En este ejemplo, se define una función `funcion` que se ejecutará en un hilo de ejecución utilizando la biblioteca `threading`. Se crea un hilo `hilo` y se ejecuta la función `funcion` en paralelo en un hilo separado. El hilo imprime un mensaje en la consola cinco veces, lo que permite realizar tareas en paralelo y aprovechar los múltiples núcleos de la CPU.
