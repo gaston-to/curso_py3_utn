@@ -26,6 +26,8 @@ class Vista:
         self.proceso = None
 
     def salir(self):
+        if self.proceso is not None:
+            self.proceso.kill()
         self.master.quit()
         self.master.destroy()
     
