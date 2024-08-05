@@ -41,15 +41,6 @@ class Vista:
         else:
             messagebox.showinfo('Servidor', 'Servidor no lanzado')
 
-# ruta = os.path.abspath(os.path.dirname(__file__))
-# ruta_ser = os.path.join(ruta, 'servidores/servidor.py')
-# proceso = subprocess.Popen([sys.executable, ruta_ser])
-# salida, error = proceso.communicate()
-# print(salida, error)
-
-# # detener proceso si fue lanzado
-# proceso.kill()
-
 def main():
     root = Tk()
     app = Vista(root)
