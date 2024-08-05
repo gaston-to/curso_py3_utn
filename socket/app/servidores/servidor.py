@@ -2,28 +2,48 @@
 
 import socket
 
-class MiServer():
+class MiServer:
+    """
+    Clase que instancia un servidor
+    """
     
     def __init__(self, dir, entrada):
+        """
+        Inicializa el servidor con la dirección y el puerto de entrada
+        """
         self.dir = dir
         self.entrada = entrada
+        self.servidor = None
         
     def lanzar_servidor(self, numero):
-        servidor = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        """
+        Lanza el servidor
+        """
+        self.servidor = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         # reusar puerto
-        servidor.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+        self.servidor.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         try:
-            servidor.bind((self.dir, self.entrada))
-            servidor.listen(numero)
-            print("Esperando por cliente ...")
-            client, dir_cl = servidor.accept()
-            print(f"Conexión aceptada de {client} desde {dir_cl}")
-            data = client.recv(1024)
-            print(f"se recibió {data}, tipo de info {data.__class__}")
-            client.send(f"Recibido: {data}".encode("UTF-8"))
-            client.close()
+            self.servidor.bind((self.dir, self.entrada))
+            self.servidor.listen(numero)
+            print(f"Servidor lanzado en {self.dir}:{self.entrada}")
+            while True:
+                print("Esperando por cliente ...")
+                client, dir_cl = self.servidor.accept()
+                print(f"Conexión aceptada de {dir_cl}")
+                data = client.recv(1024)
+                print(f"Se recibió {data}, tipo de info {type(data)}")
+                client.send(f"Recibido: {data.decode('UTF-8')}".encode("UTF-8"))
+                client.close()
+        except socket.error as e:
+            print(f"Error de socket: {e}")
+        except KeyboardInterrupt:
+            print("Servidor apagado")
         except Exception as e:
             print(f"Error: {e}")
+        finally:
+            if self.servidor is not None:
+                self.servidor.close()
+                print("Servidor cerrado")
         
 if __name__ == '__main__':
     serv = MiServer('localhost', 9999)
